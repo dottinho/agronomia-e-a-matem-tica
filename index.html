@@ -1,0 +1,388 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AgroTech - Tecnologia para o Campo</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <nav class="navbar">
+            <div class="nav-container">
+                <div class="nav-logo">
+                    <i class="fas fa-seedling"></i>
+                    <span>AgroTech</span>
+                </div>
+                <ul class="nav-menu">
+                    <li><a href="#home" class="nav-link">Início</a></li>
+                    <li><a href="#about" class="nav-link">Sobre</a></li>
+                    <li><a href="#calculator" class="nav-link">Calculadora</a></li>
+                    <li><a href="#mapping" class="nav-link">Mapeamento</a></li>
+                    <li><a href="#contact" class="nav-link">Contato</a></li>
+                </ul>
+                <div class="hamburger">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Hero Section -->
+    <section id="home" class="hero">
+        <div class="hero-content">
+            <h1 class="hero-title">Tecnologia que Conecta o Agricultor ao Campo</h1>
+            <p class="hero-subtitle">Ferramentas avançadas para otimizar sua produção agrícola com precisão e sustentabilidade</p>
+            <div class="hero-buttons">
+                <button class="btn btn-primary" onclick="scrollToSection('calculator')">
+                    <i class="fas fa-calculator"></i>
+                    Calculadora Agrícola
+                </button>
+                <button class="btn btn-secondary" onclick="scrollToSection('mapping')">
+                    <i class="fas fa-satellite"></i>
+                    Mapeamento por Satélite
+                </button>
+            </div>
+        </div>
+        <div class="hero-image">
+            <img src="images/zDEHUzHSdgyd.jpg" alt="Campo agrícola">
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="about">
+        <div class="container">
+            <h2 class="section-title">Sobre a Agronomia Moderna</h2>
+            <div class="about-grid">
+                <div class="about-card">
+                    <div class="card-icon">
+                        <i class="fas fa-chart-line"></i>
+                    </div>
+                    <h3>Agricultura de Precisão</h3>
+                    <p>Utilize dados precisos para otimizar o uso de recursos e maximizar a produtividade de suas culturas.</p>
+                </div>
+                <div class="about-card">
+                    <div class="card-icon">
+                        <i class="fas fa-leaf"></i>
+                    </div>
+                    <h3>Sustentabilidade</h3>
+                    <p>Práticas agrícolas que preservam o meio ambiente e garantem a produção para as futuras gerações.</p>
+                </div>
+                <div class="about-card">
+                    <div class="card-icon">
+                        <i class="fas fa-satellite-dish"></i>
+                    </div>
+                    <h3>Tecnologia Satelital</h3>
+                    <p>Monitoramento em tempo real das condições do campo através de imagens de satélite de alta resolução.</p>
+                </div>
+                <div class="about-card">
+                    <div class="card-icon">
+                        <i class="fas fa-calculator"></i>
+                    </div>
+                    <h3>Cálculos Precisos</h3>
+                    <p>Ferramentas matemáticas para calcular sementes, fertilizantes, irrigação e produtividade esperada.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Calculator Section -->
+    <section id="calculator" class="calculator">
+        <div class="container">
+            <h2 class="section-title">Calculadora Agrícola</h2>
+            <div class="calculator-tabs">
+                <button class="tab-btn active" data-tab="area">Área de Plantio</button>
+                <button class="tab-btn" data-tab="seeds">Sementes</button>
+                <button class="tab-btn" data-tab="fertilizer">Fertilizantes</button>
+                <button class="tab-btn" data-tab="irrigation">Irrigação</button>
+            </div>
+
+            <!-- Area Calculator -->
+            <div id="area-tab" class="tab-content active">
+                <div class="calc-grid">
+                    <div class="calc-form">
+                        <h3>Cálculo de Área</h3>
+                        <div class="form-group">
+                            <label>Tipo de Terreno:</label>
+                            <select id="area-type">
+                                <option value="rectangular">Retangular</option>
+                                <option value="circular">Circular</option>
+                                <option value="triangular">Triangular</option>
+                            </select>
+                        </div>
+                        <div id="rectangular-inputs" class="area-inputs">
+                            <div class="form-group">
+                                <label>Comprimento (m):</label>
+                                <input type="number" id="length" placeholder="Ex: 100">
+                            </div>
+                            <div class="form-group">
+                                <label>Largura (m):</label>
+                                <input type="number" id="width" placeholder="Ex: 50">
+                            </div>
+                        </div>
+                        <div id="circular-inputs" class="area-inputs" style="display: none;">
+                            <div class="form-group">
+                                <label>Raio (m):</label>
+                                <input type="number" id="radius" placeholder="Ex: 30">
+                            </div>
+                        </div>
+                        <div id="triangular-inputs" class="area-inputs" style="display: none;">
+                            <div class="form-group">
+                                <label>Base (m):</label>
+                                <input type="number" id="base" placeholder="Ex: 80">
+                            </div>
+                            <div class="form-group">
+                                <label>Altura (m):</label>
+                                <input type="number" id="height" placeholder="Ex: 60">
+                            </div>
+                        </div>
+                        <button class="btn btn-primary" onclick="calculateArea()">Calcular Área</button>
+                    </div>
+                    <div class="calc-result">
+                        <h3>Resultado</h3>
+                        <div id="area-result" class="result-display">
+                            <p>Insira as dimensões para calcular a área</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Seeds Calculator -->
+            <div id="seeds-tab" class="tab-content">
+                <div class="calc-grid">
+                    <div class="calc-form">
+                        <h3>Cálculo de Sementes</h3>
+                        <div class="form-group">
+                            <label>Área (hectares):</label>
+                            <input type="number" id="seeds-area" placeholder="Ex: 2.5">
+                        </div>
+                        <div class="form-group">
+                            <label>Tipo de Cultura:</label>
+                            <select id="crop-type">
+                                <option value="milho">Milho</option>
+                                <option value="soja">Soja</option>
+                                <option value="feijao">Feijão</option>
+                                <option value="arroz">Arroz</option>
+                                <option value="trigo">Trigo</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>Espaçamento entre fileiras (cm):</label>
+                            <input type="number" id="row-spacing" placeholder="Ex: 70">
+                        </div>
+                        <div class="form-group">
+                            <label>Espaçamento entre plantas (cm):</label>
+                            <input type="number" id="plant-spacing" placeholder="Ex: 20">
+                        </div>
+                        <button class="btn btn-primary" onclick="calculateSeeds()">Calcular Sementes</button>
+                    </div>
+                    <div class="calc-result">
+                        <h3>Resultado</h3>
+                        <div id="seeds-result" class="result-display">
+                            <p>Insira os dados para calcular a quantidade de sementes</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Fertilizer Calculator -->
+            <div id="fertilizer-tab" class="tab-content">
+                <div class="calc-grid">
+                    <div class="calc-form">
+                        <h3>Cálculo de Fertilizantes</h3>
+                        <div class="form-group">
+                            <label>Área (hectares):</label>
+                            <input type="number" id="fert-area" placeholder="Ex: 2.5">
+                        </div>
+                        <div class="form-group">
+                            <label>Nitrogênio necessário (kg/ha):</label>
+                            <input type="number" id="nitrogen" placeholder="Ex: 120">
+                        </div>
+                        <div class="form-group">
+                            <label>Fósforo necessário (kg/ha):</label>
+                            <input type="number" id="phosphorus" placeholder="Ex: 80">
+                        </div>
+                        <div class="form-group">
+                            <label>Potássio necessário (kg/ha):</label>
+                            <input type="number" id="potassium" placeholder="Ex: 100">
+                        </div>
+                        <button class="btn btn-primary" onclick="calculateFertilizer()">Calcular Fertilizantes</button>
+                    </div>
+                    <div class="calc-result">
+                        <h3>Resultado</h3>
+                        <div id="fertilizer-result" class="result-display">
+                            <p>Insira os dados para calcular a quantidade de fertilizantes</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Irrigation Calculator -->
+            <div id="irrigation-tab" class="tab-content">
+                <div class="calc-grid">
+                    <div class="calc-form">
+                        <h3>Cálculo de Irrigação</h3>
+                        <div class="form-group">
+                            <label>Área (hectares):</label>
+                            <input type="number" id="irrig-area" placeholder="Ex: 2.5">
+                        </div>
+                        <div class="form-group">
+                            <label>Evapotranspiração (mm/dia):</label>
+                            <input type="number" id="evapotranspiration" placeholder="Ex: 5">
+                        </div>
+                        <div class="form-group">
+                            <label>Eficiência do sistema (%):</label>
+                            <input type="number" id="efficiency" placeholder="Ex: 85">
+                        </div>
+                        <div class="form-group">
+                            <label>Precipitação (mm/dia):</label>
+                            <input type="number" id="precipitation" placeholder="Ex: 2">
+                        </div>
+                        <button class="btn btn-primary" onclick="calculateIrrigation()">Calcular Irrigação</button>
+                    </div>
+                    <div class="calc-result">
+                        <h3>Resultado</h3>
+                        <div id="irrigation-result" class="result-display">
+                            <p>Insira os dados para calcular a necessidade de irrigação</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Mapping Section -->
+    <section id="mapping" class="mapping">
+        <div class="container">
+            <h2 class="section-title">Mapeamento por Satélite</h2>
+            <div class="mapping-content">
+                <div class="mapping-controls">
+                    <h3>Ferramentas de Mapeamento</h3>
+                    <div class="control-group">
+                        <button class="btn btn-secondary" onclick="enableDrawing()">
+                            <i class="fas fa-draw-polygon"></i>
+                            Delimitar Área
+                        </button>
+                        <button class="btn btn-secondary" onclick="clearDrawing()">
+                            <i class="fas fa-eraser"></i>
+                            Limpar
+                        </button>
+                        <button class="btn btn-secondary" onclick="calculatePolygonArea()">
+                            <i class="fas fa-calculator"></i>
+                            Calcular Área
+                        </button>
+                    </div>
+                    <div class="area-display">
+                        <h4>Área Delimitada:</h4>
+                        <div id="polygon-area">0 hectares</div>
+                    </div>
+                    <div class="coordinates-display">
+                        <h4>Coordenadas:</h4>
+                        <textarea id="coordinates" readonly placeholder="As coordenadas aparecerão aqui..."></textarea>
+                        <button class="btn btn-primary" onclick="exportCoordinates()">
+                            <i class="fas fa-download"></i>
+                            Exportar Coordenadas
+                        </button>
+                    </div>
+                </div>
+                <div class="map-container">
+                    <div id="map"></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="contact">
+        <div class="container">
+            <h2 class="section-title">Entre em Contato</h2>
+            <div class="contact-content">
+                <div class="contact-info">
+                    <h3>Fale Conosco</h3>
+                    <p>Estamos aqui para ajudar você a otimizar sua produção agrícola com as melhores tecnologias disponíveis.</p>
+                    <div class="contact-item">
+                        <i class="fas fa-envelope"></i>
+                        <span>contato@agrotech.com.br</span>
+                    </div>
+                    <div class="contact-item">
+                        <i class="fas fa-phone"></i>
+                        <span>(11) 9999-9999</span>
+                    </div>
+                    <div class="contact-item">
+                        <i class="fas fa-map-marker-alt"></i>
+                        <span>São Paulo, SP - Brasil</span>
+                    </div>
+                </div>
+                <form class="contact-form">
+                    <div class="form-group">
+                        <input type="text" placeholder="Seu Nome" required>
+                    </div>
+                    <div class="form-group">
+                        <input type="email" placeholder="Seu E-mail" required>
+                    </div>
+                    <div class="form-group">
+                        <textarea placeholder="Sua Mensagem" rows="5" required></textarea>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Enviar Mensagem</button>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <div class="footer-logo">
+                        <i class="fas fa-seedling"></i>
+                        <span>AgroTech</span>
+                    </div>
+                    <p>Tecnologia que conecta o agricultor ao campo, promovendo uma agricultura mais eficiente e sustentável.</p>
+                </div>
+                <div class="footer-section">
+                    <h4>Links Úteis</h4>
+                    <ul>
+                        <li><a href="#home">Início</a></li>
+                        <li><a href="#about">Sobre</a></li>
+                        <li><a href="#calculator">Calculadora</a></li>
+                        <li><a href="#mapping">Mapeamento</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Ferramentas</h4>
+                    <ul>
+                        <li><a href="#calculator">Calculadora Agrícola</a></li>
+                        <li><a href="#mapping">Mapeamento por Satélite</a></li>
+                        <li><a href="#about">Agricultura de Precisão</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Redes Sociais</h4>
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-facebook"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-linkedin"></i></a>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2024 AgroTech. Todos os direitos reservados.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <script src="js/main.js"></script>
+    <script src="js/calculator.js"></script>
+    <script src="js/mapping.js"></script>
+</body>
+</html>
+
