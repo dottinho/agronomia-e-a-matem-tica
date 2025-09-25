@@ -364,3 +364,101 @@ window.calculateFertilizer = calculateFertilizer;
 window.calculateIrrigation = calculateIrrigation;
 window.calculateProductivity = calculateProductivity;
 
+function enableDrawing() {
+    if (isDrawing) {
+        showNotification('Modo de desenho já está ativo. Clique no mapa para adicionar pontos.', 'info');
+        return;
+    }
+    
+    isDrawing = true;
+    polygonPoints = [];
+    
+    // Change cursor
+    document.getElementById('map').style.cursor = 'crosshair';
+    
+    // Mostrar status de desenho
+    document.getElementById('drawingStatus').style.display = 'block';
+    
+    // Ativar visual do botão
+    updateToolButtons();
+    
+    showNotification('Modo de desenho ativado. Clique no mapa para delimitar a área. Clique duas vezes para finalizar.', 'info');
+}
+
+function stopDrawing() {
+    isDrawing = false;
+    document.getElementById('map').style.cursor = '';
+    
+    // Esconder status de desenho
+    document.getElementById('drawingStatus').style.display = 'none';
+    
+    // Atualizar botões
+    updateToolButtons();
+    
+    showNotification('Modo de desenho desativado', 'info');
+}
+
+function clearDrawing() {
+    drawingLayer.clearLayers();
+    polygonPoints = [];
+    currentPolygon = null;
+    isDrawing = false;
+    
+    document.getElementById('map').style.cursor = '';
+    document.getElementById('polygon-area').textContent = '0 hectares';
+    document.getElementById('coordinates').value = '';
+    document.getElementById('points-count').textContent = '0';
+    
+    // Esconder status
+    document.getElementById('drawingStatus').style.display = 'none';
+    
+    // Atualizar botões
+    updateToolButtons();
+    
+    showNotification('Área delimitada removida', 'info');
+}
+
+// Nova função para atualizar o estado visual dos botões
+function updateToolButtons() {
+    const buttons = document.querySelectorAll('.tool-btn');
+    buttons.forEach(btn => {
+        btn.classList.remove('active');
+    });
+    
+    if (isDrawing) {
+        buttons[0].classList.add('active'); // Botão Medir ativo
+    }
+}
+
+// Atualize a função handleMapClick para mostrar contagem de pontos
+function handleMapClick(e) {
+    if (!isDrawing) return;
+    
+    const lat = e.latlng.lat;
+    const lng = e.latlng.lng;
+    
+    polygonPoints.push([lat, lng]);
+    
+    // Atualizar contagem de pontos
+    document.getElementById('points-count').textContent = polygonPoints.length;
+    
+    // Add point marker
+    const marker = L.circleMarker([lat, lng], {
+        radius: 5,
+        fillColor: '#ff0000',
+        color: '#ffffff',
+        weight: 2,
+        opacity: 1,
+        fillOpacity: 0.8
+    }).addTo(drawingLayer);
+    
+    // Update polygon if we have more than 2 points
+    if (polygonPoints.length > 2) {
+        updatePolygon();
+    }
+    
+    // Update coordinates display
+    updateCoordinatesDisplay();
+    
+    showNotification(`Ponto ${polygonPoints.length} adicionado. ${polygonPoints.length < 3 ? 'Adicione mais pontos.' : 'Clique duas vezes para finalizar.'}`, 'info');
+}
