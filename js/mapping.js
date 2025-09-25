@@ -403,20 +403,3 @@ window.clearDrawing = clearDrawing;
 window.calculatePolygonArea = calculatePolygonArea;
 window.exportCoordinates = exportCoordinates;
 window.searchLocation = searchLocation;
-
-// Exemplo de melhoria - Adicionar snap to grid para precisão
-function addSnapToGrid(latlng, gridSize = 0.0001) {
-    return [
-        Math.round(latlng.lat / gridSize) * gridSize,
-        Math.round(latlng.lng / gridSize) * gridSize
-    ];
-}
-
-// Exemplo - Adicionar diferentes formas de desenho
-function enableRectangleMode() {
-    // Implementar modo retângulo
-}
-
-function enableCircleMode() {
-    // Implementar modo círculo
-}
