@@ -388,7 +388,7 @@ body {
 }
 
 .mapping-controls {
-    background: white;
+    background: rgb(245, 0, 0);
     padding: 2rem;
     border-radius: 15px;
     height: fit-content;
