@@ -112,7 +112,8 @@ body {
     padding-top: 80px;
 }
 
-.hero-content {
+.hero-content {Sua localização atual
+
     flex: 1;
     padding: 2rem;
     animation: slideInLeft 1s ease-out;
